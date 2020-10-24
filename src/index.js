@@ -1,3 +1,5 @@
+const { lte } = require("semver");
+
 const MORSE_TABLE = {
     '.-':     'a',
     '-...':   'b',
@@ -38,7 +40,17 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let decodeValue = (numberValue) => {
+        if (numberValue === '**********') return ' ';
+
+        let morse = numberValue.match(/.{2}/g).map(number => {
+            if (+number === 10) return '.';
+            if (+number === 11) return '-';
+        }).join('');
+
+        return MORSE_TABLE[morse];
+}
+return expr.match(/.{10}/g).map(decodeValue).join('');
 }
 
 module.exports = {
